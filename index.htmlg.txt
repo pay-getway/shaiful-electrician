@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>মেসার্স সাইফুল ইলেক্ট্রিশিয়ান</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    padding:15px;
+    background:#eef3f7;
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    color:#123b5d;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(135deg,#fff,#f4faff);
+    border:1px solid #b9d7ea;
+    border-bottom:4px solid #1671b8;
+    border-radius:11px;
+    text-align:center;
+    padding:9px 10px 7px;
+}
+
+.business-name{
+    font-size:28px;
+    font-weight:800;
+    color:#07578d;
+    line-height:1.2;
+}
+
+.business-sub{
+    font-size:13px;
+    font-weight:600;
+    color:#222;
+}
+
+.business-info{
+    font-size:11px;
+    color:#555;
+    line-height:1.4;
+}
+
+/* TITLE */
+.title{
+    width:max-content;
+    margin:9px auto;
+    padding:4px 25px;
+    background:#1671b8;
+    color:white;
+    border-radius:20px;
+    font-size:18px;
+    font-weight:800;
+}
+
+/* CUSTOMER */
+.customer-box{
+    background:#eaf5fd;
+    border:1px solid #b9d7ea;
+    border-radius:7px;
+    padding:7px;
+    margin-bottom:10px;
+}
+
+.customer-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+}
+
+.customer-field{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.customer-field.full{
+    grid-column:1/-1;
+}
+
+.customer-field label{
+    font-size:13px;
+    font-weight:700;
+    color:#07578d;
+    white-space:nowrap;
+}
+
+.customer-field input{
+    width:100%;
+    height:32px;
+    border:1px solid #a9c9dd;
+    border-radius:5px;
+    padding:4px 7px;
+    font-family:inherit;
+    font-size:13px;
+    outline:none;
+}
+
+/* TABLE */
+.table-wrap{
+    background:white;
+    border:1px solid #a9c9dd;
+    border-radius:7px;
+    overflow:hidden;
+}
+
+.main-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
+
+.main-table th{
+    background:#176ca8;
+    color:white;
+    border:1px solid #0d5689;
+    font-size:13px;
+    padding:6px 3px;
+}
+
+.main-table td{
+    border:1px solid #b8cad6;
+    height:42px;
+    padding:4px;
+}
+
+.main-table tr:nth-child(even) td{
+    background:#f7fafc;
+}
+
+.serial{
+    width:7%;
+    text-align:center;
+    font-weight:700;
+}
+
+.product{
+    width:38%;
+}
+
+.size{
+    width:28%;
+}
+
+.qty{
+    width:18%;
+}
+
+.action{
+    width:9%;
+    text-align:center;
+}
+
+select,
+.qty-input,
+.custom-input{
+    width:100%;
+    height:33px;
+    border:1px solid #b5cbd9;
+    border-radius:5px;
+    padding:3px 6px;
+    font-family:inherit;
+    font-size:13px;
+    background:white;
+    color:#173e59;
+    outline:none;
+}
+
+select:focus,
+input:focus{
+    border-color:#1671b8;
+    box-shadow:0 0 0 2px rgba(22,113,184,.10);
+}
+
+.custom-input{
+    background:#fffdf0;
+    border-color:#d5b84b;
+}
+
+.delete-btn{
+    width:29px;
+    height:29px;
+    border:0;
+    border-radius:5px;
+    background:#e94b4b;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#777;
+    font-size:14px;
+}
+
+/* BUTTONS */
+.buttons{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
+}
+
+.btn{
+    border:0;
+    border-radius:7px;
+    padding:9px 17px;
+    color:white;
+    font-family:inherit;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.add{background:#168447}
+.preview-btn{background:#7956c7}
+.print-btn{background:#1671b8}
+.clear{background:#d94444}
+
+.btn:hover{
+    opacity:.9;
+}
+
+/* ==================================================
+   PREVIEW
+================================================== */
+
+.preview-screen{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#dfe5ea;
+    z-index:9999;
+    overflow:auto;
+    padding:20px;
+}
+
+.preview-top{
+    width:210mm;
+    margin:0 auto 12px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.preview-top button{
+    border:0;
+    border-radius:6px;
+    padding:9px 16px;
+    color:white;
+    font-family:inherit;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.close-preview{
+    background:#d94444;
+}
+
+.print-preview{
+    background:#1671b8;
+}
+
+.paper{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:white;
+    padding:7mm;
+    box-shadow:0 2px 12px rgba(0,0,0,.25);
+}
+
+/* PAPER HEADER */
+.paper-header{
+    text-align:center;
+    border:1px solid #a9c9dd;
+    border-bottom:3px solid #1671b8;
+    border-radius:7px;
+    padding:5px;
+}
+
+.paper-business-name{
+    font-size:22px;
+    font-weight:800;
+    color:#07578d;
+}
+
+.paper-sub{
+    font-size:10px;
+    font-weight:600;
+}
+
+.paper-info{
+    font-size:8px;
+    color:#555;
+}
+
+.paper-title{
+    width:max-content;
+    margin:5px auto;
+    padding:2px 20px;
+    border-radius:20px;
+    background:#1671b8;
+    color:white;
+    font-size:13px;
+    font-weight:800;
+}
+
+.paper-customer{
+    background:#edf7fd;
+    border:1px solid #b9d7ea;
+    border-radius:5px;
+    padding:4px 6px;
+    margin-bottom:5px;
+    font-size:9px;
+}
+
+.customer-line{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4px;
+}
+
+.customer-line .full{
+    grid-column:1/-1;
+}
+
+/* ==================================================
+   IMPORTANT:
+   LEFT = 1-25
+   RIGHT = 26-50
+================================================== */
+
+.preview-columns{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:3mm;
+}
+
+.preview-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
+
+.preview-table th{
+    background:#176ca8;
+    color:white;
+    border:0.25mm solid #0d5689;
+    font-size:8px;
+    padding:2px;
+    height:6mm;
+}
+
+.preview-table td{
+    border:0.25mm solid #aebfcc;
+    font-size:8px;
+    height:7mm;
+    padding:1px 2px;
+    vertical-align:middle;
+}
+
+.preview-table tr:nth-child(even) td{
+    background:#f6f9fb;
+}
+
+.pno{
+    width:10%;
+    text-align:center;
+}
+
+.pname{
+    width:42%;
+}
+
+.psize{
+    width:28%;
+}
+
+.pqty{
+    width:20%;
+    text-align:center;
+}
+
+/* MOBILE */
+@media(max-width:650px){
+
+    body{
+        padding:7px;
+    }
+
+    .business-name{
+        font-size:21px;
+    }
+
+    .business-sub{
+        font-size:10px;
+    }
+
+    .business-info{
+        font-size:9px;
+    }
+
+    .customer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .customer-field.full{
+        grid-column:auto;
+    }
+
+    .main-table th{
+        font-size:10px;
+    }
+
+    .main-table td{
+        height:40px;
+        padding:2px;
+    }
+
+    select,
+    .qty-input,
+    .custom-input{
+        font-size:10px;
+        height:31px;
+        padding:2px;
+    }
+
+    .serial{
+        font-size:10px;
+    }
+
+    .preview-screen{
+        padding:5px;
+    }
+
+    .preview-top{
+        width:100%;
+    }
+
+    .paper{
+        transform-origin:top left;
+        transform:scale(.45);
+        margin-bottom:-160mm;
+    }
+}
+
+/* PRINT */
+@page{
+    size:A4 portrait;
+    margin:7mm;
+}
+
+@media print{
+
+    body>*{
+        display:none !important;
+    }
+
+    .preview-screen{
+        display:block !important;
+        position:static;
+        padding:0;
+        background:white;
+        overflow:visible;
+    }
+
+    .preview-top{
+        display:none;
+    }
+
+    .paper{
+        width:210mm;
+        min-height:297mm;
+        margin:0;
+        padding:0;
+        box-shadow:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <div class="business-name">
+            মেসার্স সাইফুল ইলেক্ট্রিশিয়ান
+        </div>
+
+        <div class="business-sub">
+            ইলেক্ট্রিক ও পাইপ ফিটিংস-এর কাজ করা হয়
+        </div>
+
+        <div class="business-info">
+            মোবাইল: 01832556690<br>
+            ঠিকানা: আবদুল্যাহ মিয়ার হাট, সুবর্ণচর, নোয়াখালী
+        </div>
+
+    </div>
+
+    <div class="title">
+        পণ্য স্লিপ
+    </div>
+
+    <!-- CUSTOMER -->
+    <div class="customer-box">
+
+        <div class="customer-grid">
+
+            <div class="customer-field">
+                <label>নাম:</label>
+                <input id="customerName" placeholder="গ্রাহকের নাম">
+            </div>
+
+            <div class="customer-field">
+                <label>মোবাইল:</label>
+                <input id="customerPhone" placeholder="মোবাইল নম্বর">
+            </div>
+
+            <div class="customer-field full">
+                <label>ঠিকানা:</label>
+                <input id="customerAddress" placeholder="গ্রাহকের ঠিকানা">
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN TABLE -->
+    <div class="table-wrap">
+
+        <table class="main-table">
+
+            <thead>
+                <tr>
+                    <th class="serial">ক্রমিক</th>
+                    <th class="product">পণ্যের নাম</th>
+                    <th class="size">সাইজ</th>
+                    <th class="qty">পরিমাণ</th>
+                    <th class="action">×</th>
+                </tr>
+            </thead>
+
+            <tbody id="productBody"></tbody>
+
+        </table>
+
+        <div id="emptyMessage" class="empty">
+            এখনো কোনো পণ্য যোগ করা হয়নি
+        </div>
+
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="buttons">
+
+        <button class="btn add" onclick="addProduct()">
+            ＋ পণ্য যোগ করুন
+        </button>
+
+        <button class="btn preview-btn" onclick="openPreview()">
+            👁 Preview
+        </button>
+
+        <button class="btn print-btn" onclick="printMemo()">
+            🖨 Print / PDF
+        </button>
+
+        <button class="btn clear" onclick="clearAll()">
+            সব মুছুন
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     PREVIEW SCREEN
+================================================== -->
+
+<div id="previewScreen" class="preview-screen">
+
+    <div class="preview-top">
+
+        <button class="close-preview" onclick="closePreview()">
+            ✕ বন্ধ করুন
+        </button>
+
+        <button class="print-preview" onclick="window.print()">
+            🖨 Print / Save PDF
+        </button>
+
+    </div>
+
+    <div class="paper">
+
+        <div class="paper-header">
+
+            <div class="paper-business-name">
+                মেসার্স সাইফুল ইলেক্ট্রিশিয়ান
+            </div>
+
+            <div class="paper-sub">
+                ইলেক্ট্রিক ও পাইপ ফিটিংস-এর কাজ করা হয়
+            </div>
+
+            <div class="paper-info">
+                মোবাইল: 01832556690<br>
+                ঠিকানা: আবদুল্যাহ মিয়ার হাট, সুবর্ণচর, নোয়াখালী
+            </div>
+
+        </div>
+
+        <div class="paper-title">
+            পণ্য স্লিপ
+        </div>
+
+        <div class="paper-customer">
+
+            <div class="customer-line">
+
+                <div>
+                    <b>নাম:</b>
+                    <span id="previewName"></span>
+                </div>
+
+                <div>
+                    <b>মোবাইল:</b>
+                    <span id="previewPhone"></span>
+                </div>
+
+                <div class="full">
+                    <b>ঠিকানা:</b>
+                    <span id="previewAddress"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="preview-columns">
+
+            <!-- ==============================
+                 LEFT = 1-25
+            =============================== -->
+
+            <div>
+
+                <table class="preview-table">
+
+                    <thead>
+                        <tr>
+                            <th class="pno">ক্রমিক</th>
+                            <th class="pname">পণ্যের নাম</th>
+                            <th class="psize">সাইজ</th>
+                            <th class="pqty">পরিমাণ</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="leftPreview"></tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- ==============================
+                 RIGHT = 26-50
+            =============================== -->
+
+            <div>
+
+                <table class="preview-table">
+
+                    <thead>
+                        <tr>
+                            <th class="pno">ক্রমিক</th>
+                            <th class="pname">পণ্যের নাম</th>
+                            <th class="psize">সাইজ</th>
+                            <th class="pqty">পরিমাণ</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="rightPreview"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   PRODUCT DATABASE
+================================================== */
+
+const products={
+
+"৩/৪ পাইব":[],
+'১" পাইব':[],
+
+"৩/৪ ব্যান":["লং","সট"],
+'১" ব্যান':["লং","সট"],
+
+"৩/৪ জয়েন সকেট":[],
+'১" জয়েন সকেট':[],
+
+"৩/৪ সাকুলার বক্স":[
+"১মুখা","২মুখা","৩মুখা","৪মুখা"
+],
+
+'১” সাকুলার বক্স':[
+"১মুখা","২মুখা","৩মুখা","৪মুখা"
+],
+
+"ক্যাবল ট্রাই":[
+"১০০m","২০০m","২৫০m"
+],
+
+"UPVC গাম":[
+"১০০ গ্রাম","২০০ গ্রাম"
+],
+
+"পেপার":[],
+
+"টেপ":[
+"লাল","কালো","সবুজ","হলুদ"
+],
+
+"জিয়াই তার":[
+"১৪নং","১৬নং"
+],
+
+"কিলিপ":[
+"8m","10m","14m","20m","25m"
+],
+
+"গেং তলা":[],
+"এস’ডিবি বক্স":[],
+
+"তার লাল":[
+"১.০ আর এম",
+"১.৩ আর এম",
+"২.০ আর এম",
+"২.৫ আর এম",
+"৩.৫ আর এম",
+"৪.০ আর এম",
+"৪.৫ আর এম",
+"৭.০ আর এম"
+],
+
+"তার কালো":[
+"১.০ আর এম",
+"১.৩ আর এম",
+"২.০ আর এম",
+"২.৫ আর এম",
+"৩.৫ আর এম",
+"৪.০ আর এম",
+"৪.৫ আর এম",
+"৭.০ আর এম"
+],
+
+"তার সবুজ":[
+"১.০ আর এম",
+"১.৩ আর এম"
+],
+
+"তার হলুদ":[
+"১.৫ আর এম",
+"২.০ আর এম",
+"২.৫ আর এম"
+],
+
+"হোইলড়ার":[
+"বড়","ছোট"
+],
+
+"রাউন প্লেট":[
+'৪"','৫"'
+],
+
+"ঝিলিং রোজ":[
+"বড়","ছোট"
+],
+
+"স্কুরুপ":[
+'১"','১.৫"'
+],
+
+"এম কে স্কুরুপ":[
+'১.৫"','২"'
+],
+
+"রয়েল প্লাগ":[],
+"রয়েল বোল্ড":[],
+
+"এমোনেট বোড":[
+"৫/১০"
+],
+
+"মিটার বোড":[],
+
+"কাটআউট":[
+"১৫এম","৩০এম"
+],
+
+"কলিং বেল":[],
+
+"সুইচ":[
+"১ গেং",
+"২ গেং",
+"৩ গেং",
+"৪ গেং"
+],
+
+"৫পিন সকেট":[],
+"৩পিন এসি সকেট":[],
+"ডি.পি সুইচ":[],
+"কালিং পুশ":[],
+
+"ডিপি বেকার":[
+"২০এম",
+"৩০এম",
+"৪০এম"
+],
+
+"এস, পি বেকার":[
+"৬ এম",
+"১০ এম",
+"১৬ এম",
+"২০এম"
+],
+
+"চ্যানেল":[
+'৩/৪"',
+'১"',
+'১.৫"'
+],
+
+"পোশ পাইব":[
+'হাপ"',
+'৩/৪"'
+],
+
+"আটতিং রট":[],
+
+"ওয়াল কাটার":[
+'৪"',
+'৫"'
+],
+
+"গেং প্লেট":[],
+
+"প্রদীপ মেইন সুইচ":[
+"১৫এম",
+"৩০এম"
+],
+
+"ফ্যান ডিমার":[],
+"মাসকিন টেপ":[],
+"হেকশো বেলেট":[]
+
+};
+
+
+/* ==================================================
+   ROW COUNT
+================================================== */
+
+let rowNumber=0;
+
+
+/* ==================================================
+   ADD PRODUCT ROW
+================================================== */
+
+function addProduct(){
+
+    if(rowNumber>=50){
+        alert("সর্বোচ্চ ৫০টি পণ্য যোগ করা যাবে।");
+        return;
+    }
+
+    rowNumber++;
+
+    const tbody=
+        document.getElementById("productBody");
+
+    const tr=
+        document.createElement("tr");
+
+    tr.innerHTML=`
+
+        <td class="serial">
+            ${rowNumber}
+        </td>
+
+        <td>
+
+            <select
+                class="productSelect"
+                onchange="productChange(this)"
+            >
+
+                <option value="">
+                    পণ্য নির্বাচন
+                </option>
+
+                ${productOptions()}
+
+                <option value="__NEW__">
+                    ＋ নতুন পণ্য লিখুন
+                </option>
+
+            </select>
+
+        </td>
+
+        <td>
+
+            <select
+                class="sizeSelect"
+                onchange="sizeChange(this)"
+            >
+
+                <option value="">
+                    সাইজ নির্বাচন
+                </option>
+
+                <option value="__NEW_SIZE__">
+                    ＋ নতুন সাইজ লিখুন
+                </option>
+
+            </select>
+
+        </td>
+
+        <td>
+
+            <input
+                class="qty-input"
+                placeholder="পরিমাণ"
+            >
+
+        </td>
+
+        <td class="action">
+
+            <button
+                class="delete-btn"
+                onclick="deleteProduct(this)"
+            >
+                ×
+            </button>
+
+        </td>
+    `;
+
+    tbody.appendChild(tr);
+
+    updateEmpty();
+}
+
+
+/* ==================================================
+   PRODUCT OPTIONS
+================================================== */
+
+function productOptions(){
+
+    let html="";
+
+    Object.keys(products).forEach(product=>{
+
+        html+=`
+            <option value="${escapeHTML(product)}">
+                ${escapeHTML(product)}
+            </option>
+        `;
+
+    });
+
+    return html;
+}
+
+
+/* ==================================================
+   PRODUCT CHANGE
+================================================== */
+
+function productChange(select){
+
+    const row=
+        select.closest("tr");
+
+    const size=
+        row.querySelector(".sizeSelect");
+
+
+    if(select.value==="__NEW__"){
+
+        const name=
+            prompt("নতুন পণ্যের নাম লিখুন:");
+
+        if(!name || !name.trim()){
+
+            select.value="";
+            return;
+        }
+
+        const productName=
+            name.trim();
+
+        if(!products[productName]){
+            products[productName]=[];
+        }
+
+
+        const input=
+            document.createElement("input");
+
+        input.className=
+            "custom-input productCustom";
+
+        input.value=
+            productName;
+
+        input.placeholder=
+            "পণ্যের নাম লিখুন";
+
+        input.oninput=
+            updatePreview;
+
+        select.replaceWith(input);
+
+        makeSizeList(
+            size,
+            productName
+        );
+
+        updatePreview();
+
+        return;
+    }
+
+
+    makeSizeList(
+        size,
+        select.value
+    );
+
+    updatePreview();
+}
+
+
+/* ==================================================
+   SIZE LIST
+================================================== */
+
+function makeSizeList(
+    select,
+    product
+){
+
+    select.innerHTML=`
+        <option value="">
+            সাইজ নির্বাচন
+        </option>
+    `;
+
+    const sizes=
+        products[product] || [];
+
+
+    sizes.forEach(size=>{
+
+        const option=
+            document.createElement("option");
+
+        option.value=size;
+        option.textContent=size;
+
+        select.appendChild(option);
+
+    });
+
+
+    const custom=
+        document.createElement("option");
+
+    custom.value=
+        "__NEW_SIZE__";
+
+    custom.textContent=
+        "＋ নতুন সাইজ লিখুন";
+
+    select.appendChild(custom);
+}
+
+
+/* ==================================================
+   SIZE CHANGE
+================================================== */
+
+function sizeChange(select){
+
+    if(
+        select.value!=="__NEW_SIZE__"
+    ){
+
+        updatePreview();
+        return;
+    }
+
+
+    const value=
+        prompt("সাইজ লিখুন:");
+
+    if(!value || !value.trim()){
+
+        select.value="";
+        return;
+    }
+
+
+    const input=
+        document.createElement("input");
+
+    input.className=
+        "custom-input sizeCustom";
+
+    input.value=
+        value.trim();
+
+    input.placeholder=
+        "সাইজ লিখুন";
+
+    input.oninput=
+        updatePreview;
+
+    select.replaceWith(input);
+
+    updatePreview();
+}
+
+
+/* ==================================================
+   DELETE
+================================================== */
+
+function deleteProduct(button){
+
+    button
+        .closest("tr")
+        .remove();
+
+    renumber();
+
+    updateEmpty();
+
+    updatePreview();
+}
+
+
+/* ==================================================
+   RENUMBER
+================================================== */
+
+function renumber(){
+
+    const rows=
+        document.querySelectorAll(
+            "#productBody tr"
+        );
+
+    rowNumber=
+        rows.length;
+
+    rows.forEach(
+        (row,index)=>{
+
+            row.querySelector(
+                ".serial"
+            ).textContent=
+                index+1;
+
+        }
+    );
+}
+
+
+/* ==================================================
+   EMPTY MESSAGE
+================================================== */
+
+function updateEmpty(){
+
+    const count=
+        document.querySelectorAll(
+            "#productBody tr"
+        ).length;
+
+    document.getElementById(
+        "emptyMessage"
+    ).style.display=
+        count ? "none" : "block";
+}
+
+
+/* ==================================================
+   GET PRODUCT
+================================================== */
+
+function getProduct(row){
+
+    const el=
+        row.querySelector(
+            ".productSelect,.productCustom"
+        );
+
+    return el
+        ? el.value.trim()
+        : "";
+}
+
+
+/* ==================================================
+   GET SIZE
+================================================== */
+
+function getSize(row){
+
+    const el=
+        row.querySelector(
+            ".sizeSelect,.sizeCustom"
+        );
+
+    return el
+        ? el.value.trim()
+        : "";
+}
+
+
+/* ==================================================
+   UPDATE PREVIEW
+================================================== */
+
+function updatePreview(){
+
+    const left=
+        document.getElementById(
+            "leftPreview"
+        );
+
+    const right=
+        document.getElementById(
+            "rightPreview"
+        );
+
+    left.innerHTML="";
+    right.innerHTML="";
+
+
+    const rows=
+        document.querySelectorAll(
+            "#productBody tr"
+        );
+
+
+    rows.forEach(
+        (row,index)=>{
+
+            const no=
+                index+1;
+
+            const product=
+                getProduct(row);
+
+            const size=
+                getSize(row);
+
+            const qty=
+                row.querySelector(
+                    ".qty-input"
+                )?.value.trim() || "";
+
+
+            const tr=
+                document.createElement("tr");
+
+            tr.innerHTML=`
+
+                <td class="pno">
+                    ${no}
+                </td>
+
+                <td class="pname">
+                    ${escapeHTML(product)}
+                </td>
+
+                <td class="psize">
+                    ${escapeHTML(size)}
+                </td>
+
+                <td class="pqty">
+                    ${escapeHTML(qty)}
+                </td>
+
+            `;
+
+
+            /*
+              LEFT = 1-25
+              RIGHT = 26-50
+            */
+
+            if(no<=25){
+
+                left.appendChild(tr);
+
+            }else{
+
+                right.appendChild(tr);
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "previewName"
+    ).textContent=
+        document.getElementById(
+            "customerName"
+        ).value;
+
+
+    document.getElementById(
+        "previewPhone"
+    ).textContent=
+        document.getElementById(
+            "customerPhone"
+        ).value;
+
+
+    document.getElementById(
+        "previewAddress"
+    ).textContent=
+        document.getElementById(
+            "customerAddress"
+        ).value;
+}
+
+
+/* ==================================================
+   OPEN PREVIEW
+================================================== */
+
+function openPreview(){
+
+    updatePreview();
+
+    document.getElementById(
+        "previewScreen"
+    ).style.display=
+        "block";
+
+    document.body.style.overflow=
+        "hidden";
+}
+
+
+/* ==================================================
+   CLOSE PREVIEW
+================================================== */
+
+function closePreview(){
+
+    document.getElementById(
+        "previewScreen"
+    ).style.display=
+        "none";
+
+    document.body.style.overflow=
+        "auto";
+}
+
+
+/* ==================================================
+   PRINT / PDF
+================================================== */
+
+function printMemo(){
+
+    updatePreview();
+
+    document.getElementById(
+        "previewScreen"
+    ).style.display=
+        "block";
+
+    document.body.style.overflow=
+        "visible";
+
+    setTimeout(
+        ()=>{
+            window.print();
+        },
+        250
+    );
+}
+
+
+/* ==================================================
+   CLEAR
+================================================== */
+
+function clearAll(){
+
+    if(
+        !confirm(
+            "সব তথ্য মুছে ফেলবেন?"
+        )
+    ){
+        return;
+    }
+
+
+    document.getElementById(
+        "productBody"
+    ).innerHTML="";
+
+    rowNumber=0;
+
+
+    document.getElementById(
+        "customerName"
+    ).value="";
+
+    document.getElementById(
+        "customerPhone"
+    ).value="";
+
+    document.getElementById(
+        "customerAddress"
+    ).value="";
+
+
+    updateEmpty();
+    updatePreview();
+}
+
+
+/* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHTML(value){
+
+    return String(value || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* ==================================================
+   LIVE UPDATE
+================================================== */
+
+document.addEventListener(
+    "input",
+    function(e){
+
+        if(
+            e.target.id==="customerName" ||
+            e.target.id==="customerPhone" ||
+            e.target.id==="customerAddress" ||
+            e.target.classList.contains(
+                "qty-input"
+            ) ||
+            e.target.classList.contains(
+                "productCustom"
+            ) ||
+            e.target.classList.contains(
+                "sizeCustom"
+            )
+        ){
+
+            updatePreview();
+        }
+
+    }
+);
+
+
+/* INITIAL */
+updateEmpty();
+updatePreview();
+
+</script>
+
+</body>
+</html>
